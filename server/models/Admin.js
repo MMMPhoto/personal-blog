@@ -45,9 +45,9 @@ adminSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// userSchema.virtual("picCount").get(function () {
-//   return this.savedPics.length;
-// });
+adminSchema.virtual("postCount").get(function () {
+  return this.savedPics.length;
+});
 
 const Admin = model("Admin", adminSchema);
 
