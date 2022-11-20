@@ -1,4 +1,4 @@
-const User = require("./User.js");
-const Picture = require("./Picture.js");
+const Admin = require("./Admin.js");
+const Post = require("./Post.js");
 
-module.exports = { User, Picture };
+module.exports = { Admin, Post };
