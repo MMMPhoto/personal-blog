@@ -4,7 +4,12 @@
   "description": "Personal blog site for recording and sharing posts, both public and private",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
@@ -17,6 +22,7 @@
   },
   "homepage": "https://github.com/MMMPhoto/personal-blog#readme",
   "dependencies": {
+    "concurrently": "^7.5.0",
     "create-react-app": "^5.0.1"
   }
 }
