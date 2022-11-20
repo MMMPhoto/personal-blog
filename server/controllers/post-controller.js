@@ -1,33 +1,25 @@
-const { Picture } = require("../models/index");
-const path = require("path");
-const {
-  getGpsData,
-  getCustomExifData,
-  exifOptions,
-} = require("../utils/exifr");
-const { uploadImage, uploadOptions } = require("../utils/cloudinary");
-const fsPromises = require("fs").promises;
+const { Post } = require("../models/index");
 
 module.exports = {
-  async getAllPics(req, res) {
-    Picture.find({})
+  async getAllPosts(req, res) {
+    Post.find({})
       .select("-__v")
-      .then((dbPictureData) => res.json(dbPictureData))
+      .then((dbPostData) => res.json(dbPostData))
       .catch((err) => {
         console.error({ message: err });
         return res.status(500).json(err);
       });
   },
 
-  async getPicById({ params }, res) {
-    Picture.findOne({ _id: params.id })
+  async getPostById({ params }, res) {
+    Post.findOne({ _id: params.id })
       .select("-__v")
-      .then((dbPictureData) => {
-        if (!dbPictureData) {
-          res.status(404).json({ message: "No picture found with that id." });
+      .then((dbPostData) => {
+        if (!dbPostData) {
+          res.status(404).json({ message: "No post found with that id." });
           return;
         }
-        res.json(dbPictureData);
+        res.json(dbPostData);
       })
       .catch((err) => {
         console.log(err);
@@ -35,74 +27,30 @@ module.exports = {
       });
   },
 
-  async createNewPic(req, res, next) {
+  async createNewPost(req, res, next) {
     try {
-      // Define path of uploaded picture
-      const filePath = path.join(`./uploads/${req.file.filename}`);
-      // Get GPS and Exif data from picture
-      const gpsData = await getGpsData(filePath);
-      // Return error if no GPS data present
-      if (!gpsData) {
-        await fsPromises.unlink(filePath);
-        return res
-          .status(400)
-          .json({
-            error: "NoGPS",
-            message:
-              "Your photo does not contain GPS data. Please try another photo!",
-          });
-      }
-      const exifData = await getCustomExifData(filePath, exifOptions);
-      console.log(exifData);
-      // Upload to Cloudinary
-      const uploadPhotoData = await uploadImage(filePath, uploadOptions);
-      // Return error if cloudinary response is bad
-      if (!uploadPhotoData) {
-        await fsPromises.unlink(filePath);
-        return res
-          .status(400)
-          .json({
-            error: "fileTooBig",
-            message: "Your file is too large. Upload limit is 10MB!",
-          });
-      }
-      // Get unique cloudinary photo ID
-      const photoUrl = uploadPhotoData.secure_url;
-      const publicId = uploadPhotoData.public_id;
-      // Build object for database
-      const photoData = {
-        ...gpsData,
-        ...exifData,
-      };
-      photoData.url = photoUrl;
-      photoData.public_id = publicId;
-      // Add Photo Data to Database
-      const addPicture = await Picture.create({
-        lat: photoData.latitude,
-        lng: photoData.longitude,
-        url: photoData.url,
-        public_id: photoData.public_id,
-        createdAt: photoData.CreateDate,
-        offsetTime: photoData.OffsetTime,
-        tags: photoData.tags,
-      });
-      // Delete file from temporary upload folder
-      await fsPromises.unlink(filePath);
-      return res.json(addPicture);
+      const newPost = await Post.create(req.body);
+      const postAuthor = await Admin.findOneAndUpdate(
+          { _id: req.body.admin._id },
+          { $addToSet: { thoughts: newThought._id } },
+          { runValidators: true, new: true }
+      );
+      // Need to add Auth middleware
+      !postAuthor ? res.status(404).json({ message: 'Thought added, but no User found with that ID' }) : res.status(200).json(newThought);   
     } catch (err) {
-      console.error(err);
-      res.json(err);
-    }
+        console.log(err);
+        res.status(500).json(err);
+    };
   },
 
-  async updatePic({ params, body }, res) {
-    Picture.findByIdAndUpdate({ _id: params.id }, body, { new: true })
-      .then((dbPictureData) => {
-        if (!dbPictureData) {
-          res.status(404).json({ message: "No picture found with that id." });
+  async updatePost({ params, body }, res) {
+    Post.findByIdAndUpdate({ _id: params.id }, body, { new: true })
+      .then((dbPostData) => {
+        if (!dbPostData) {
+          res.status(404).json({ message: "No post found with that id." });
           return;
         }
-        res.json(dbPictureData);
+        res.json(dbPostData);
       })
       .catch((err) => {
         console.log((err) => {
@@ -113,13 +61,13 @@ module.exports = {
   },
 
   async deletePic({ params }, res) {
-    Picture.findOneAndDelete({ _id: params.id }, { new: true })
-      .then((dbPictureData) => {
-        if (!dbPictureData) {
-          res.status(404).json({ message: "No picture found with that id." });
+    Post.findOneAndDelete({ _id: params.id }, { new: true })
+      .then((dbPostData) => {
+        if (!dbPostData) {
+          res.status(404).json({ message: "No post found with that id." });
           return;
         }
-        res.json({ message: "Picture deleted" });
+        res.json({ message: "Post deleted" });
       })
       .catch((err) => {
         console.log(err);
