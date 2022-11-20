@@ -1,0 +1,22 @@
+{
+  "name": "personal-blog",
+  "version": "1.0.0",
+  "description": "Personal blog site for recording and sharing posts, both public and private",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MMMPhoto/personal-blog.git"
+  },
+  "author": "Max McDonough",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MMMPhoto/personal-blog/issues"
+  },
+  "homepage": "https://github.com/MMMPhoto/personal-blog#readme",
+  "dependencies": {
+    "create-react-app": "^5.0.1"
+  }
+}
