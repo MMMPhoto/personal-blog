@@ -4,10 +4,11 @@ import React from "react";
 export default function Nav() {
 
     return (
-        <nav style={{ backgroundColor: '#EEE' }} >
-            <ul className='d-flex flex-column flex-lg-row justify-content-between'>
+        <nav className="col-5 align-self-center" style={{ backgroundColor: '#EEE' }} >
+            <ul className="d-flex flex-column flex-lg-row justify-content-between list-unstyled">
                 <li> Home </li>
-                <li> Search For Post </li>
+                <li> About </li>
+                <li> Search </li>
                 <li> Contact Me </li>
                 <li> Email List </li>
             </ul>
