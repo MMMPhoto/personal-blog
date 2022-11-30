@@ -60,7 +60,7 @@ module.exports = {
       });
   },
 
-  async deletePic({ params }, res) {
+  async deletePost({ params }, res) {
     Post.findOneAndDelete({ _id: params.id }, { new: true })
       .then((dbPostData) => {
         if (!dbPostData) {
