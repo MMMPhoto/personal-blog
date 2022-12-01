@@ -30,13 +30,14 @@ module.exports = {
   async createNewPost(req, res, next) {
     try {
       const newPost = await Post.create(req.body);
-      const postAuthor = await Admin.findOneAndUpdate(
-          { _id: req.body.admin._id },
-          { $addToSet: { thoughts: newThought._id } },
-          { runValidators: true, new: true }
-      );
+      // const postAuthor = await Admin.findOneAndUpdate(
+      //     { _id: req.body.admin._id },
+      //     { $addToSet: { thoughts: newThought._id } },
+      //     { runValidators: true, new: true }
+      // );
       // Need to add Auth middleware
-      !postAuthor ? res.status(404).json({ message: 'Thought added, but no User found with that ID' }) : res.status(200).json(newThought);   
+      // !postAuthor ? res.status(404).json({ message: 'Post added, but no User found with that ID' }) : res.status(200).json(newPost);
+      res.status(200).json(newPost);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

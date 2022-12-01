@@ -14,14 +14,15 @@ const postSchema = new Schema(
     },
     updatedAt: {
       type: Date,
+      default: Date.now
     },
     public: {
       type: Boolean,
     },
-    url: {
-      type: String,
-      required: true,
-    },
+    // url: {
+    //   type: String,
+    //   required: true,
+    // },
     tags: [
       {
         type: String,
@@ -33,6 +34,8 @@ const postSchema = new Schema(
       virtuals: true,
       getters: true,
     },
+    timestamps: true,
+    
   }
 );
 
