@@ -13,6 +13,7 @@ export default function Home() {
                 const response = await getAllPosts();
                 const jsonData = await response.json();
                 console.log(jsonData);
+                setPublicPosts(jsonData);
             } catch (error) {
                 console.log("error", error);
             };
@@ -22,9 +23,9 @@ export default function Home() {
 
     return (
         <div>
-            <Post />
-            <hr></hr>
-            <Post />
+            { publicPosts && publicPosts.map((post) => (
+                <Post postData={post} />
+            ))}
         </div>
     );
 };
