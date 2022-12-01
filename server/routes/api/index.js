@@ -3,6 +3,6 @@ const adminRoutes = require("./adminRoutes");
 const postRoutes = require("./postRoutes");
 
 router.use("/admin", adminRoutes);
-router.use("/post", postRoutes);
+router.use("/posts", postRoutes);
 
 module.exports = router;
