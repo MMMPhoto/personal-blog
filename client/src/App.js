@@ -7,6 +7,7 @@ import About from './pages/About';
 import Search from './pages/Search';
 import Contact from './pages/Contact';
 import EmailList from './pages/EmailList';
+import SinglePost from './pages/SinglePost';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/email-list" element={<EmailList />} />
+          <Route path="/posts/:postId" element={<SinglePost />} />
         </Routes>
         <Footer />
       </div>
