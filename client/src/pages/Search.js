@@ -40,7 +40,7 @@ function Background() {
   return props.map(({ x, y, rot, scale }, i) => (
     <animated.div className="stack" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
       {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
-      <animated.div className="card" {...bind(i)} style={{ height: '1000px', transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} />
+      <animated.div className="card" {...bind(i)} style={{ height: '100vh', transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} />
     </animated.div>
   ))
 };
