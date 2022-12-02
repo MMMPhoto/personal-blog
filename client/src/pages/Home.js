@@ -24,7 +24,7 @@ export default function Home() {
     return (
         <div>
             { publicPosts && publicPosts.map((post) => (
-                <Post postData={post} />
+                <Post key={post.id} postData={post} />
             ))}
         </div>
     );
