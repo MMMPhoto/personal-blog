@@ -10,6 +10,7 @@ import EmailList from './pages/EmailList';
 import SinglePost from './pages/SinglePost';
 import Footer from './components/Footer';
 import './App.css';
+import './pages/Search.css'
 
 export default function App() {
   return (

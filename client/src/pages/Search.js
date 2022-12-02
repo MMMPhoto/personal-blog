@@ -18,7 +18,7 @@ const from = i => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-export default function Search() {
+function Background() {
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
   const [props, set] = useSprings(cards.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
@@ -38,18 +38,18 @@ export default function Search() {
   })
   // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
   return props.map(({ x, y, rot, scale }, i) => (
-    <animated.div className="deck" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
+    <animated.div className="stack" key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
       {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
-      <animated.div className="card" {...bind(i)} style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} />
+      <animated.div className="card" {...bind(i)} style={{ height: '1000px', transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }} />
     </animated.div>
   ))
 };
 
-// export default function Search() {
+export default function Search() {
 
-//     return (
-//         <div>
-//             <h3>Search my posts</h3>
-//         </div>
-//     );
-// };
+    return (
+        <div>
+            <Background className="background" />
+        </div>
+    );
+};
