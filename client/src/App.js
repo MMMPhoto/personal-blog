@@ -8,6 +8,8 @@ import Search from './pages/Search';
 import Contact from './pages/Contact';
 import EmailList from './pages/EmailList';
 import SinglePost from './pages/SinglePost';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -25,6 +27,8 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/email-list" element={<EmailList />} />
           <Route path="/posts/:postId" element={<SinglePost />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </div>
