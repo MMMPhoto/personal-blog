@@ -1,59 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createNewAdmin } from '../utils/api';
+import Auth from '../utils/auth';
 
 export default function Signup() {
+
+    // Set form data state
+    const [userFormData, setUserFormData] = useState({ adminName: "", email: "", password: "" });
+    const navigate = useNavigate();
+
+    // Capture form data to state
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setUserFormData({ ...userFormData, [name]: value });
+      };
+    
+    // Submit form data on click
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+
+        // Check if form has everything
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        try {
+            const response = await createNewAdmin(userFormData);
+            if (!response.ok) throw new Error("Something went wrong!");
+            const { token, user } = await response.json();
+            console.log(user);
+            Auth.login(token);
+            navigate("/");
+        } catch (err) {
+            console.error(err);
+        }
+        // setUserFormData({ adminName: "", email: "", password: "" });
+    };
 
     return (
         <div>
             <form style={{ display: 'flex', flexDirection: 'column', margin: '10vw'}}>
                 <input
-                    //   value={userFormData.email}
-                    //   name="email"
-                    //   onChange={handleInputChange}
-                    //   type="email"
-                    //   id="form3Example3c"
-                    //   className="form-control"
+                    value={userFormData.adminName}
+                    name="adminName"
+                    onChange={handleInputChange}
+                    type="text"
                 />
-                <label
-                    //   className="form-label"
-                    //   htmlFor="form3Example3c"
-                >
-                    Admin Username
-                </label>
+                <label htmlFor="adminName">Admin Username</label>
                 <input
-                    //   value={userFormData.email}
-                    //   name="email"
-                    //   onChange={handleInputChange}
-                    //   type="email"
-                    //   id="form3Example3c"
-                    //   className="form-control"
+                    value={userFormData.email}
+                    name="email"
+                    onChange={handleInputChange}
+                    type="email"
                 />
-                <label
-                    //   className="form-label"
-                    //   htmlFor="form3Example3c"
-                >
-                    Email
-                </label>
+                <label htmlFor="email">Email</label>
                 <input
-                    //   value={userFormData.password}
-                    //   name="password"
-                    //   type="password"
-                    //   onChange={handleInputChange}
-                    //   id="form3Example4c"
-                    //   className="form-control"
+                    value={userFormData.password}
+                    name="password"
+                    type="password"
+                    onChange={handleInputChange}
                 />
-                <label
-                    //   className="form-label"
-                    //   htmlFor="form3Example4c"
-                >
-                    Password
-                </label>
-
+                <label htmlFor="password">Password</label>
                 <button
-                    // type="button"
-                    // className="btn btn-primary btn-lg"
-                    // onClick={handleFormSubmit}
+                    type="button"
+                    onClick={handleFormSubmit}
                 >
-                    Login
+                    Signup
                 </button>
             </form>
         </div>
