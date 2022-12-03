@@ -43,9 +43,13 @@ module.exports = {
   },
 
   async createNewAdmin(req, res) {
-    Admin.create(req.body)
-      .then((dbAdminData) => res.json(dbAdminData))
-      .catch((err) => res.status(500).json(err));
+    try {
+		const newAdmin = await Admin.create(req.body);
+		return res.json(newAdmin);
+	} catch (err) {
+		console.log(err);
+		return res.status(400).json(err);
+	};
   },
 
   async updateAdmin({ params, body }, res) {

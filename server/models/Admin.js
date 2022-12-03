@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const adminSchema = new Schema(
   {
-    userName: {
+    adminName: {
       type: String,
       required: true,
       unique: true,
@@ -46,7 +46,7 @@ adminSchema.methods.isCorrectPassword = async function (password) {
 };
 
 adminSchema.virtual("postCount").get(function () {
-  return this.savedPics.length;
+  return this.Posts.length;
 });
 
 const Admin = model("Admin", adminSchema);
