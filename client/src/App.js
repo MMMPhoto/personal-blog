@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Header from './components/Header';
 // import Nav from './components/Nav';
 import Home from './pages/Home';
@@ -40,9 +40,8 @@ export default function App() {
 					<Route path="/posts/:postId" element={<SinglePost />} />
 					<Route path="/signup" element={<Signup />} />
 					<Route path="/login" element={<Login />} />
-					<Route 
-						path="/admin"
-						element={ (isLoggedIn) ? <Admin /> : <Home /> }
+					<Route path="/admin"
+						element={ (isLoggedIn) ? <Admin /> : <Navigate to='/' /> }
 					/>
 				</Routes>
 				<Footer />
