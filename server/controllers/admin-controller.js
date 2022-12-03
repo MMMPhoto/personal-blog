@@ -45,7 +45,8 @@ module.exports = {
   async createNewAdmin(req, res) {
     try {
 		const newAdmin = await Admin.create(req.body);
-		return res.json(newAdmin);
+		const token = signToken(newAdmin);
+		return res.json({ token, newAdmin });
 	} catch (err) {
 		console.log(err);
 		return res.status(400).json(err);

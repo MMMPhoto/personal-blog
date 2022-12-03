@@ -29,8 +29,8 @@ export default function Signup() {
         try {
             const response = await createNewAdmin(userFormData);
             if (!response.ok) throw new Error("Something went wrong!");
-            const { token, user } = await response.json();
-            console.log(user);
+            const { token, admin } = await response.json();
+            console.log(admin);
             Auth.login(token);
             navigate("/");
         } catch (err) {
