@@ -8,9 +8,9 @@ export default function Post({postData}) {
         <div className="m-4">
             <Link className="link-style" to={`/posts/${postData.id}`}>
                 <h2 className="post-title">{postData.title}</h2>
-                <p className="post-body">{postData.body}</p>
-                <img src="https://picsum.photos/200/300" alt="random placeholder" />
             </Link>
+            <p className="post-body">{postData.body}</p>
+            <img src="https://picsum.photos/200/300" alt="random placeholder" />
         </div>
     );
 };

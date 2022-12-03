@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSprings, animated, to as interpolate } from 'react-spring';
-import { useGesture } from 'react-use-gesture';
+import { useDrag } from '@use-gesture/react';
 import Post from './Post';
 import './Deck.css'
 
@@ -14,7 +14,7 @@ export default function Deck({cards}) {
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
   const [props, set] = useSprings(cards.length, i => ({ ...to(i), from: from(i) })) // Create a bunch of springs using the helpers above
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
-  const bind = useGesture(({ args: [index], down, delta: [xDelta], distance, direction: [xDir], velocity }) => {
+  const bind = useDrag(({ args: [index], down, delta: [xDelta], distance, direction: [xDir], velocity }) => {
     const trigger = velocity > 0.2 // If you flick hard enough it should trigger the card to fly out
     const dir = xDir < 0 ? -1 : 1 // Direction should either point left or right
     if (!down && trigger) gone.add(index) // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
