@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Post from '../components/Post';
+import Deck from "../components/Deck";
+// import Post from '../components/Post';
 import { getAllPosts } from "../utils/api";
 
 export default function Home() {
@@ -11,7 +12,8 @@ export default function Home() {
         const fetchAllPosts = async () => {
             try {
                 const response = await getAllPosts();
-                const jsonData = await response.json();
+                let jsonData = await response.json();
+                jsonData = jsonData.reverse();
                 console.log(jsonData);
                 setPublicPosts(jsonData);
             } catch (error) {
@@ -23,9 +25,16 @@ export default function Home() {
 
     return (
         <div>
-            { publicPosts && publicPosts.map((post) => (
-                <Post key={post.id} postData={post} />
-            ))}
+            { publicPosts && <Deck cards={publicPosts} /> }
         </div>
+
     );
+
+    // return (
+    //     <div>
+    //         { publicPosts && publicPosts.map((post) => (
+    //             <Post key={post.id} postData={post} />
+    //         ))}
+    //     </div>
+    // );
 };
