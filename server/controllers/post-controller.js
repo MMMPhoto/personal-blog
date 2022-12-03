@@ -2,29 +2,24 @@ const { Post } = require("../models/index");
 
 module.exports = {
   async getAllPosts(req, res) {
-    Post.find({})
-      .select("-__v")
-      .then((dbPostData) => res.json(dbPostData))
-      .catch((err) => {
-        console.error({ message: err });
-        return res.status(500).json(err);
-      });
+    try {
+      const allPosts = await Post.find({});
+      res.status(200).json(allPosts);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    };
   },
 
   async getPostById({ params }, res) {
-    Post.findOne({ _id: params.id })
-      .select("-__v")
-      .then((dbPostData) => {
-        if (!dbPostData) {
-          res.status(404).json({ message: "No post found with that id." });
-          return;
-        }
-        res.json(dbPostData);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.sendStatus(404);
-      });
+    try {
+      const onePost = await Post.findOne({ _id: params.id });
+      !onePost && res.status(404).json({ message: "No post found with that id." });
+      res.status(200).json(onePost);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    };
   },
 
   async createNewPost(req, res, next) {
@@ -39,8 +34,8 @@ module.exports = {
       // !postAuthor ? res.status(404).json({ message: 'Post added, but no User found with that ID' }) : res.status(200).json(newPost);
       res.status(200).json(newPost);
     } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+      console.log(err);
+      res.status(500).json(err);
     };
   },
 
