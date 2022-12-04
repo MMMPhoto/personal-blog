@@ -42,8 +42,8 @@ export default function App() {
 						<Route path="/contact" element={<Contact />} />
 						<Route path="/email-list" element={<EmailList />} />
 						<Route path="/posts/:postId" element={<SinglePost />} />
-						<Route path="/signup" element={<Signup />} />
-						<Route path="/login" element={<Login />} />
+						<Route path="/signup" element={<Signup setAuth={setAuth} />} />
+						<Route path="/login" element={<Login setAuth={setAuth} />} />
 						<Route path="/admin"
 							element={ (auth.isLoggedIn) ? <Admin /> : <Navigate to='/' /> }
 						/>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createNewAdmin } from '../utils/api';
 import Auth from '../utils/auth';
 
-export default function Signup() {
+export default function Signup({setAuth}) {
 
     // Set form data state
     const [userFormData, setUserFormData] = useState({ adminName: "", email: "", password: "" });
@@ -32,6 +32,7 @@ export default function Signup() {
             const { token, admin } = await response.json();
             console.log(admin);
             Auth.login(token);
+            setAuth({isLoggedIn: true})
             navigate("/");
         } catch (err) {
             console.error(err);
