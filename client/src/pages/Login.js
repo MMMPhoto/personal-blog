@@ -36,8 +36,7 @@ export default function Login({setAuth}) {
             navigate("/");
         } catch (err) {
             console.error(err);
-        }
-        // setUserFormData({ adminName: "", email: "", password: "" });
+        };
     };
 
     return (
