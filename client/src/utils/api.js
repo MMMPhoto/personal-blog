@@ -25,7 +25,8 @@ export const createNewPost = (formData) => {
         body: formData,
     });
 };
-  
+
+// Create new administrator
 export const createNewAdmin = (adminData) => {
     return fetch("/api/admin", {
         method: "POST",
@@ -35,16 +36,17 @@ export const createNewAdmin = (adminData) => {
         body: JSON.stringify(adminData),
     });
 };
-  
-//   export const loginUser = (userData) => {
-//     return fetch("/api/users/login", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(userData),
-//     });
-//   };
+
+// Log in administrator
+  export const loginAdmin = (adminData) => {
+    return fetch("/api/admin/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(adminData),
+    });
+  };
   
 //   export const getCurrentUser = (token) => {
 //     return fetch("/api/users/me", {

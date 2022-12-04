@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createNewAdmin } from '../utils/api';
-import Auth from '../utils/auth';
+import auth from '../utils/auth';
 
 export default function Signup({setAuth}) {
 
@@ -24,14 +24,14 @@ export default function Signup({setAuth}) {
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
-        }
+        };
 
         try {
             const response = await createNewAdmin(userFormData);
             if (!response.ok) throw new Error("Something went wrong!");
             const { token, admin } = await response.json();
             console.log(admin);
-            Auth.login(token);
+            auth.login(token);
             setAuth({isLoggedIn: true})
             navigate("/");
         } catch (err) {
@@ -68,7 +68,7 @@ export default function Signup({setAuth}) {
                     type="button"
                     onClick={handleFormSubmit}
                 >
-                    Signup
+                    Sign up
                 </button>
             </form>
         </div>

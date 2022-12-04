@@ -42,51 +42,47 @@ module.exports = {
       });
   },
 
-  async createNewAdmin(req, res) {
-    try {
-		const newAdmin = await Admin.create(req.body);
-		const token = signToken(newAdmin);
-		return res.json({ token, newAdmin });
-	} catch (err) {
-		console.log(err);
-		return res.status(400).json(err);
-	};
-  },
+	async createNewAdmin(req, res) {
+		try {
+			const newAdmin = await Admin.create(req.body);
+			const token = signToken(newAdmin);
+			return res.json({ token, newAdmin });
+		} catch (err) {
+			console.log(err);
+			return res.status(400).json(err);
+		};
+	},
 
-  async updateAdmin({ params, body }, res) {
-    Admin.findByIdAndUpdate({ _id: params.id }, body, { new: true })
-      .then((dbAdminData) => {
-        if (!dbAdminData) {
-          res.status(404).json({ message: "No user found with that ID" });
-          return;
-        }
-        res.json(dbAdminData);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.sendStatus(404);
-      });
-  },
+	async updateAdmin({ params, body }, res) {
+		Admin.findByIdAndUpdate({ _id: params.id }, body, { new: true })
+		.then((dbAdminData) => {
+			if (!dbAdminData) {
+			res.status(404).json({ message: "No user found with that ID" });
+			return;
+			}
+			res.json(dbAdminData);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.sendStatus(404);
+		});
+	},
 
-  async login({ body }, res) {
-    const admin = await Admin.findOne({
-      $or: [{ email: body.email }, { password: body.password }],
-    }).populate({
-      path: "Posts",
-      options: { strictPopulate: false },
-    });
-    if (!admin) {
-      return res.status(400).json({ message: "No Admin found" });
-    };
-
-    const correctPw = await admin.isCorrectPassword(body.password);
-
-    if (!correctPw) {
-      return res.status(400).json({ message: "Incorrect Password!" });
-    };
-    const token = signToken(admin);
-    res.json({ token, admin });
-  },
+	async login({ body }, res) {
+		try {
+			const admin = await Admin.findOne({
+				$or: [{ email: body.email }, { password: body.password }],
+			})
+			!admin && res.status(400).json({ message: "No Admin with that email!" });
+			const correctPw = await admin.isCorrectPassword(body.password);
+			!correctPw && res.status(400).json({ message: "Incorrect Password!" });
+			const token = signToken(admin);
+			res.json({ token, admin });
+		} catch (err) {
+			console.log(err);
+			return res.status(400).json(err);
+		};
+	},
 
   async savePost({ admin, body }, res) {
     try {
