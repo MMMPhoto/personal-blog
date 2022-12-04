@@ -17,35 +17,40 @@ import './App.css';
 
 export default function App() {
 	// Set logged in state
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [auth, setAuth] = useState({ isLoggedIn: false, isLoading: true });
 
 	// Check login status on load
 	useEffect(() => {
 		const token = Auth.loggedIn() ? Auth.getToken() : null;
-		token ? setIsLoggedIn(true) : setIsLoggedIn(false);
+		token ? 
+			setAuth({ isLoggedIn: true, isLoading: false }) : 
+			setAuth({ isLoggedIn: false, isLoading: false });
+		console.log(auth);
 	}, []);
 
   	return (
 		<Router>
-			<div className="d-flex flex-column">
-				<div style={{ backgroundColor: '#EEE' }} >
-				<Header />
+			{!auth.isLoading &&
+				<div className="d-flex flex-column">
+					<div style={{ backgroundColor: '#EEE' }} >
+					<Header loggedIn={auth.isLoggedIn} />
+					</div>
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/about" element={<About />} />
+						<Route path="/search" element={<Search />} />
+						<Route path="/contact" element={<Contact />} />
+						<Route path="/email-list" element={<EmailList />} />
+						<Route path="/posts/:postId" element={<SinglePost />} />
+						<Route path="/signup" element={<Signup />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/admin"
+							element={ (auth.isLoggedIn) ? <Admin /> : <Navigate to='/' /> }
+						/>
+					</Routes>
+					<Footer />
 				</div>
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/about" element={<About />} />
-					<Route path="/search" element={<Search />} />
-					<Route path="/contact" element={<Contact />} />
-					<Route path="/email-list" element={<EmailList />} />
-					<Route path="/posts/:postId" element={<SinglePost />} />
-					<Route path="/signup" element={<Signup />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/admin"
-						element={ (isLoggedIn) ? <Admin /> : <Navigate to='/' /> }
-					/>
-				</Routes>
-				<Footer />
-			</div>
+			}
 		</Router>
   	);
 };
