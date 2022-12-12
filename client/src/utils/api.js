@@ -1,6 +1,6 @@
 // Get All Posts
 export const getAllPosts = () => {
-    return fetch("/api/posts/", {
+    return fetch("/api/posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -48,14 +48,15 @@ export const createNewAdmin = (adminData) => {
     });
   };
   
-//   export const getCurrentUser = (token) => {
-//     return fetch("/api/users/me", {
-//       headers: {
-//         "Content-Type": "application/json",
-//         authorization: `Bearer ${token}`,
-//       },
-//     });
-//   };
+  export const getCurrentAdmin = (token) => {
+    return fetch("/api/admin/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`,
+      },
+    });
+  };
   
 //   export const savePic = (picToSave, token) => {
 //     return fetch("/api/users", {
