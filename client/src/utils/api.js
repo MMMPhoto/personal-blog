@@ -22,7 +22,10 @@ export const getOnePost = (postId) => {
 export const createNewPost = (formData) => {
     return fetch('/api/posts', {
         method: 'POST',
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
     });
 };
 

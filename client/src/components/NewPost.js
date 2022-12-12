@@ -34,12 +34,13 @@ export default function NewPost() {
             if (!loggedIn) return false;
             const token = auth.getToken();
             console.log(`token: ${token}`);
-            const checkAdmin = await getCurrentAdmin(token);
-            if (!checkAdmin) throw new Error("something went wrong!");
-            const admin = await checkAdmin.json();
-            const sendPost = await createNewPost(userFormData);
-            if (!sendPost.ok) throw new Error("Something went wrong!");
-            const newPost = await sendPost.json();
+            // const checkAdmin = await getCurrentAdmin(token);
+            // if (!checkAdmin) throw new Error("something went wrong!");
+            // const admin = await checkAdmin.json();
+            console.log(userFormData);
+            const response = await createNewPost(userFormData);
+            if (!response.ok) throw new Error("Something went wrong!");
+            const newPost = await response.json();
             console.log(newPost);
         } catch (err) {
             console.error(err);
