@@ -23,8 +23,8 @@ export default function Home() {
 
     return (
         <div>
-            { publicPosts && publicPosts.map((post) => (
-                <Post postData={post} />
+            { publicPosts && publicPosts.map((post, index) => (
+                <Post key={index} postData={post} />
             ))}
         </div>
     );
