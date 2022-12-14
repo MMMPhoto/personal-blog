@@ -5,7 +5,7 @@ import auth from "../utils/auth";
 export default function NewPost() {
 
     // Set new post form data
-    const [userFormData, setUserFormData] = useState({ title: "", body: "", public: false });
+    const [userFormData, setUserFormData] = useState({ postAuthorId: "", title: "", body: "", public: false });
 
     // Capture form data to state
     const handleInputChange = (event) => {
@@ -38,6 +38,7 @@ export default function NewPost() {
             if (!checkAdmin) throw new Error("something went wrong!");
             const admin = await checkAdmin.json();
             console.log(admin);
+            setUserFormData({ postAuthorId: admin.id })
             console.log(userFormData);
             const response = await createNewPost(userFormData);
             if (!response.ok) throw new Error("Something went wrong!");
