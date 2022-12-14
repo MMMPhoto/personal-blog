@@ -20,9 +20,8 @@ router
 
 router.route("/login").post(login);
 
-router.route("/:id").get(getAdminById).put(updateAdmin);
+router.route("/me").get(authMiddleware, getCurrentAdmin);
 
-router.route("/me")
-  .get(authMiddleware, getCurrentAdmin);
+router.route("/:id").get(getAdminById).put(updateAdmin);
 
 module.exports = router;
