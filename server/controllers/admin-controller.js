@@ -13,8 +13,8 @@ module.exports = {
       });
   },
 
-  async getCurrentAdmin({ admin = null, params }, res) {
-    const foundAdmin = await Admin.findOne({ _id: admin ? admin._id : params.id }).populate({
+  async getCurrentAdmin({ admin }, res) {
+    const foundAdmin = await Admin.findOne({ _id: admin._id }).populate({
       path: "Posts",
       options: { strictPopulate: false },
     });

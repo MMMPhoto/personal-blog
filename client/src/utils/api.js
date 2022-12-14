@@ -50,22 +50,12 @@ export const createNewAdmin = (adminData) => {
       body: JSON.stringify(adminData),
     });
   };
-  
-  // export const getCurrentAdmin = (token) => {
-  //   return fetch("/api/admin/me", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "authorization": `Bearer ${token}`,
-  //     },
-  //   });
-  // };
 
   export const getCurrentAdmin = (token) => {
     return fetch("/api/admin/me", {
       headers: {
         "Content-Type": "application/json",
-        "authorization": `Bearer ${token}`,
+        "authorization": token,
       },
     });
   };
