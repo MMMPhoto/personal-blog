@@ -19,10 +19,10 @@ const postSchema = new Schema(
     public: {
       type: Boolean,
     },
-    // url: {
-    //   type: String,
-    //   required: true,
-    // },
+    postAuthor: {
+      type: Schema.Types.ObjectId,
+      ref: "Admin",
+    },
     tags: [
       {
         type: String,
