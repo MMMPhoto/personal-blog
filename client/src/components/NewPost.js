@@ -12,15 +12,12 @@ export default function NewPost() {
         const { name, value } = event.target;
         setUserFormData({ ...userFormData, [name]: value });
     };
-
-    // Capture radio data
-    const handleVisibility = (event) => {
-        setUserFormData({ public: event.target.value });
-    };
     
     // Submit form data on click
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+
+        // Recommit values to state
 
         // Check if form has everything
         const form = event.currentTarget;
@@ -57,6 +54,7 @@ export default function NewPost() {
                     name="title"
                     onChange={handleInputChange}
                     type="text"
+                    required
                 />
                 <label htmlFor="body">Body</label>
                 <input
@@ -64,16 +62,19 @@ export default function NewPost() {
                     name="body"
                     onChange={handleInputChange}
                     type="text"
+                    required
                 />
                 <div 
                     style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginLeft: '15vw', marginRight: '15vw' }}
-                    onChange={handleVisibility}
+                    value={userFormData.public}
                     >
                     <p>Visibility:</p>
                     <div style={{ marginLeft: '1vw' }}>
                         <input
                             name="visibility"
                             value={true}
+                            checked={userFormData.public === true}
+                            onChange={() => setUserFormData({ public: true })}
                             type="radio"
                         />
                         <label style={{ marginLeft: '1vw' }} htmlFor="public">Public</label>
@@ -82,6 +83,8 @@ export default function NewPost() {
                         <input
                             name="visibility"
                             value={false}
+                            checked={userFormData.public === false}
+                            onChange={() => setUserFormData({ public: false })}
                             type="radio"
                         />
                         <label style={{ marginLeft: '1vw' }} htmlFor="private">Private</label>
