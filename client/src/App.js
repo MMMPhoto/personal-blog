@@ -25,7 +25,6 @@ export default function App() {
 		token ? 
 			setAuth({ isLoggedIn: true, isLoading: false }) : 
 			setAuth({ isLoggedIn: false, isLoading: false });
-		console.log(auth);
 	}, []);
 
   	return (

@@ -20,7 +20,7 @@ export default function NewPost() {
        return true;
     };
 
-    // Add post author to state
+    // Add post author to state on load
     useEffect(() => {
         // Get post author from token 
         const getPostAuthor = async () => {
