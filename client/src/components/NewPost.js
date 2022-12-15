@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createNewPost, getCurrentAdmin } from "../utils/api";
 import auth from "../utils/auth";
 
@@ -12,33 +12,45 @@ export default function NewPost() {
         const { name, value } = event.target;
         setUserFormData({ ...userFormData, [name]: value });
     };
+
+    // Validate form state
+    const validateFormState = ({ title, body }) => {
+       if (!title) return false;
+       if (!body) return false;
+       return true;
+    };
+
+    // Add post author to state
+    useEffect(() => {
+        // Get post author from token 
+        const getPostAuthor = async () => {
+            const token = auth.getToken();
+            const checkAdmin = await getCurrentAdmin(token);
+            if (!checkAdmin) throw new Error("Can't find Admin!");
+            const admin = await checkAdmin.json();
+            // Add post author to state
+            setUserFormData({ postAuthor: admin.id });
+        };
+        getPostAuthor();
+    }, []);
     
     // Submit form data on click
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-
-        // Recommit values to state
-
-        // Check if form has everything
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        };
-
         try {
+            // Validate form state
+            const formValid = validateFormState(userFormData);
+            if (!formValid) {
+                console.log('complete all fields')
+                return;
+            };
+            // Check token and get post author
             const loggedIn = auth.loggedIn();
             if (!loggedIn) return false;
-            const token = auth.getToken();
-            console.log(`token: ${token}`);
-            const checkAdmin = await getCurrentAdmin(token);
-            if (!checkAdmin) throw new Error("something went wrong!");
-            const admin = await checkAdmin.json();
-            console.log(admin);
-            setUserFormData({ postAuthor: admin.id })
-            console.log(userFormData);
+            
+            // Send post to database
             const response = await createNewPost(userFormData);
-            if (!response.ok) throw new Error("Something went wrong!");
+            if (!response.ok) throw new Error("Something went wrong publishing your post!");
             const newPost = await response.json();
             console.log(newPost);
         } catch (err) {
@@ -54,7 +66,6 @@ export default function NewPost() {
                     name="title"
                     onChange={handleInputChange}
                     type="text"
-                    required
                 />
                 <label htmlFor="body">Body</label>
                 <input
@@ -62,7 +73,6 @@ export default function NewPost() {
                     name="body"
                     onChange={handleInputChange}
                     type="text"
-                    required
                 />
                 <div 
                     style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginLeft: '15vw', marginRight: '15vw' }}
