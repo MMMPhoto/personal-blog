@@ -19,6 +19,10 @@ const postSchema = new Schema(
     public: {
       type: Boolean,
     },
+    // True means published post, false means saved as draft
+    published: {
+      type: Boolean,
+    },
     postAuthor: {
       type: Schema.Types.ObjectId,
       ref: "Admin",

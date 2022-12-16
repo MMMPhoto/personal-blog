@@ -33,9 +33,9 @@ export default function NewPost() {
         };
         getPostAuthor();
     }, []);
-    
-    // Submit form data on click
-    const handleFormSubmit = async (event) => {
+
+    // Submit form data to save draft
+    const handleSaveDraft = async (event) => {
         event.preventDefault();
         try {
             // Validate form state
@@ -47,6 +47,41 @@ export default function NewPost() {
             // Check token and get post author
             const loggedIn = auth.loggedIn();
             if (!loggedIn) return false;
+
+            // Add published: false to state object
+            const draftFormData = userFormData;
+            draftFormData.published = false;
+            console.log(draftFormData);
+
+            // Send post to database
+            const response = await createNewPost(draftFormData);
+            if (!response.ok) throw new Error("Something went wrong publishing your post!");
+            const newPost = await response.json();
+            console.log(newPost);
+        } catch (err) {
+            console.error(err);
+        };
+    };
+    
+    // Submit form data to publish post
+    const handlePublishPost = async (event) => {
+        event.preventDefault();
+        try {
+            // Validate form state
+            const formValid = validateFormState(userFormData);
+            if (!formValid) {
+                console.log('complete all fields')
+                return;
+            };
+            // Check token and get post author
+            const loggedIn = auth.loggedIn();
+            if (!loggedIn) return false;
+
+            // Add published: false to state object
+            const draftFormData = userFormData;
+            draftFormData.published = false;
+            console.log(draftFormData);
+   
             
             // Send post to database
             const response = await createNewPost(userFormData);
@@ -101,14 +136,14 @@ export default function NewPost() {
                     </div>
                 </div>
                 <button
-                    // type="button"
-                    // onClick={handleFormSubmit}
+                    type="button"
+                    onClick={handleSaveDraft}
                 >
                     Save
                 </button>
                 <button
                     type="button"
-                    onClick={handleFormSubmit}
+                    onClick={handlePublishPost}
                 >
                     Publish
                 </button>
