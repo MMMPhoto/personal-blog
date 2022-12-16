@@ -39,6 +39,6 @@ const draftSchema = new Schema(
   }
 );
 
-const Post = model("Draft", draftSchema);
+const Draft = model("Draft", draftSchema);
 
 module.exports = Draft;

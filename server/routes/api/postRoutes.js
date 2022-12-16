@@ -7,7 +7,6 @@ const {
   updatePost,
   deletePost,
 } = require("../../controllers/post-controller.js");
-const { create } = require("../../models/Admin.js");
 
 router.route("/").get(getAllPosts).post(createNewPost);
 
