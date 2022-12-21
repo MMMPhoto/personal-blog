@@ -5,7 +5,8 @@ import auth from "../utils/auth";
 export default function NewPost() {
 
     // Set new post form data
-    const [userFormData, setUserFormData] = useState({ postAuthor: "", title: "", body: "", public: false });
+    const [userFormData, setUserFormData] = useState({ postAuthor: "", title: "", body: "" });
+    const [postPublic, setPostPublic] = useState(false);
 
     // Capture form data to state
     const handleInputChange = (event) => {
@@ -51,6 +52,7 @@ export default function NewPost() {
             // Add published: false to state object
             const draftFormData = userFormData;
             draftFormData.published = false;
+            draftFormData.public = postPublic;
             console.log(draftFormData);
 
             // Send post to database
@@ -79,9 +81,9 @@ export default function NewPost() {
 
             // Add published: false to state object
             const draftFormData = userFormData;
-            draftFormData.published = false;
+            draftFormData.published = true;
+            draftFormData.public = postPublic;
             console.log(draftFormData);
-   
             
             // Send post to database
             const response = await createNewPost(userFormData);
@@ -111,15 +113,15 @@ export default function NewPost() {
                 />
                 <div 
                     style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginLeft: '15vw', marginRight: '15vw' }}
-                    value={userFormData.public}
+                    value={postPublic}
                     >
                     <p>Visibility:</p>
                     <div style={{ marginLeft: '1vw' }}>
                         <input
                             name="visibility"
                             value={true}
-                            checked={userFormData.public === true}
-                            onChange={() => setUserFormData({ public: true })}
+                            checked={postPublic === true}
+                            onChange={() => setPostPublic(true)}
                             type="radio"
                         />
                         <label style={{ marginLeft: '1vw' }} htmlFor="public">Public</label>
@@ -128,8 +130,8 @@ export default function NewPost() {
                         <input
                             name="visibility"
                             value={false}
-                            checked={userFormData.public === false}
-                            onChange={() => setUserFormData({ public: false })}
+                            checked={postPublic === false}
+                            onChange={() => setPostPublic(false)}
                             type="radio"
                         />
                         <label style={{ marginLeft: '1vw' }} htmlFor="private">Private</label>
