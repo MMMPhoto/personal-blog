@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from '../components/Post';
-import { getAllPosts } from "../utils/api";
+import { getPublicPosts } from "../utils/api";
 
 export default function Home() {
 
@@ -8,9 +8,9 @@ export default function Home() {
 
     //  Fetch all public posts
     useEffect(() => {
-        const fetchAllPosts = async () => {
+        const fetchPublicPosts = async () => {
             try {
-                const response = await getAllPosts(true, true);
+                const response = await getPublicPosts();
                 const jsonData = await response.json();
                 console.log(jsonData);
                 setPublicPosts(jsonData);
@@ -18,7 +18,7 @@ export default function Home() {
                 console.log("error", error);
             };
         };
-        fetchAllPosts();
+        fetchPublicPosts();
     }, []);
 
     return (

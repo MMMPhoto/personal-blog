@@ -1,12 +1,21 @@
 // Get All Posts
-export const getAllPosts = (published, publicStatus) => {
-    return fetch(`/api/posts/${published}/${publicStatus}`, {
+export const getAllPosts = () => {
+    return fetch('/api/posts/', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
   };
+
+export const getPublicPosts = () => {
+  return fetch('/api/posts/public', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
   
 // Get One Posts
 export const getOnePost = (postId) => {
