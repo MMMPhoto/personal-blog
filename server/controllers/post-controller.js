@@ -1,9 +1,12 @@
 const { Post, Admin } = require("../models/index");
 
 module.exports = {
-  async getAllPosts(req, res) {
+  async getAllPosts({ params }, res) {
     try {
-      const allPosts = await Post.find({});
+      const allPosts = await Post.find({
+        published: params.published,
+        public: params.public
+      });
       res.status(200).json(allPosts);
     } catch (err) {
       console.log(err);

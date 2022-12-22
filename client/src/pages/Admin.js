@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Home from "./Home";
+import PostList from "../components/PostList";
 import NewPost from "../components/NewPost";
 
 
@@ -18,7 +18,9 @@ export default function Admin() {
                     <li className="nav-item" onClick={() => setActiveTab("Update")}> Update Post </li>
                 </ul>
             </nav>
-            {(activeTab === "All") && (<Home />)}
+            {(activeTab === "All") && (
+                    <PostList />
+                )}
             {(activeTab === "New") && (<NewPost />)}
             {(activeTab === "Update") && (<p>Update</p>)}
         </div>

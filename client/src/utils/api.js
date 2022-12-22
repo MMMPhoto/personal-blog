@@ -1,6 +1,6 @@
 // Get All Posts
-export const getAllPosts = () => {
-    return fetch("/api/posts", {
+export const getAllPosts = (published, publicStatus) => {
+    return fetch(`/api/posts/${published}/${publicStatus}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -8,7 +8,7 @@ export const getAllPosts = () => {
     });
   };
   
-// Get All Posts
+// Get One Posts
 export const getOnePost = (postId) => {
     return fetch(`/api/posts/${postId}`, {
         method: "GET",
