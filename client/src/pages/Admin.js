@@ -1,22 +1,26 @@
 import React, { useState } from "react";
+import Home from "./Home";
 import NewPost from "../components/NewPost";
+
 
 export default function Admin() {
 
-    // State to reveal form
-    const [newPostForm, setNewPostForm] = useState(false);
-
-    // Reveal new post form
-    const revealNewPostForm = () => {
-        setNewPostForm(true);
-    };
+    // Admin active component state
+    const [activeTab, setActiveTab] = useState("All");
 
     return (
         <div>
             <h3>Admin Panel</h3>
-            {(newPostForm) ?
-                (<NewPost />) : (<button onClick={revealNewPostForm} >New Post</button>)
-            }
+            <nav className="col-7 align-self-center" style={{ backgroundColor: '#EEE' }} >
+                <ul className="d-flex flex-column flex-lg-row justify-content-between list-unstyled">
+                    <li className="nav-item" onClick={() => setActiveTab("All")}> View All Posts </li>
+                    <li className="nav-item" onClick={() => setActiveTab("New")}> New Post </li>
+                    <li className="nav-item" onClick={() => setActiveTab("Update")}> Update Post </li>
+                </ul>
+            </nav>
+            {(activeTab === "All") && (<Home />)}
+            {(activeTab === "New") && (<NewPost />)}
+            {(activeTab === "Update") && (<p>Update</p>)}
         </div>
     );
 };
