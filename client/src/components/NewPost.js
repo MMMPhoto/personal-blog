@@ -75,9 +75,10 @@ export default function NewPost() {
                 console.log('complete all fields')
                 return;
             };
-            // Check token and get post author
+            // Get token and get post author
             const loggedIn = auth.loggedIn();
             if (!loggedIn) return false;
+            const token = auth.getToken();
 
             // Add published: false to state object
             const draftFormData = userFormData;
@@ -86,7 +87,7 @@ export default function NewPost() {
             console.log(draftFormData);
             
             // Send post to database
-            const response = await createNewPost(userFormData);
+            const response = await createNewPost(userFormData, token);
             if (!response.ok) throw new Error("Something went wrong publishing your post!");
             const newPost = await response.json();
             console.log(newPost);

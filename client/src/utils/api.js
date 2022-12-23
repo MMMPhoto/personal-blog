@@ -29,11 +29,12 @@ export const getOnePost = (postId) => {
 };
 
 // Create New Post
-export const createNewPost = (formData) => {
+export const createNewPost = (formData, token) => {
     return fetch('/api/posts', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
+          "authorization": token,
         },
         body: JSON.stringify(formData),
     });
