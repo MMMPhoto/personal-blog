@@ -5,9 +5,9 @@ import auth from "../utils/auth";
 
 export default function PostList() {
 
-    const [publicPosts, setPublicPosts] = useState([{}]);
+    const [allPosts, setAllPosts] = useState([{}]);
 
-    //  Fetch all public posts
+    //  Fetch all posts
     useEffect(() => {
         const fetchAllPosts = async () => {
             try {
@@ -15,7 +15,7 @@ export default function PostList() {
                 const response = await getAllPosts(token);
                 const jsonData = await response.json();
                 console.log(jsonData);
-                setPublicPosts(jsonData);
+                setAllPosts(jsonData);
             } catch (error) {
                 console.log("error", error);
             };
@@ -25,7 +25,7 @@ export default function PostList() {
 
     return (
         <div>
-            { publicPosts && publicPosts.map((post, index) => (
+            { allPosts && allPosts.map((post, index) => (
                 <Post key={index} postData={post} />
             ))}
         </div>

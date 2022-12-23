@@ -1,9 +1,9 @@
 const { Post, Admin } = require("../models/index");
 
 module.exports = {
-  async getAllPosts(req, res) {
+  async getAllPosts({ admin }, res) {
     try {
-      const allPosts = await Post.find({});
+      const allPosts = await Post.find({ postAuthor: admin._id });
       res.status(200).json(allPosts);
     } catch (err) {
       console.log(err);
@@ -26,6 +26,7 @@ module.exports = {
 
   async getPostById({ params }, res) {
     try {
+      // Need to add auth middleware for posts that aren't public
       const onePost = await Post.findOne({ _id: params.id });
       !onePost && res.status(404).json({ message: "No post found with that id." });
       res.status(200).json(onePost);
@@ -38,7 +39,7 @@ module.exports = {
   async createNewPost(req, res, next) {
     try {
       const newPost = await Post.create(req.body);
-      const postAuthor = await Admin.findOneAndUpdate(
+      await Admin.findOneAndUpdate(
           { _id: req.body.postAuthor },
           { $addToSet: { Posts: newPost._id } },
           { runValidators: true, new: true }
