@@ -9,6 +9,7 @@ export const getAllPosts = (token) => {
     });
   };
 
+// Get all public posts for public users (home page)
 export const getPublicPosts = () => {
   return fetch('/api/posts/public', {
     method: "GET",

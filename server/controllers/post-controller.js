@@ -43,8 +43,6 @@ module.exports = {
           { $addToSet: { Posts: newPost._id } },
           { runValidators: true, new: true }
       );
-      // Need to add Auth middleware
-      // !postAuthor ? res.status(404).json({ message: 'Post added, but no User found with that ID' }) : res.status(200).json(newPost);
       res.status(200).json(newPost);
     } catch (err) {
       console.log(err);

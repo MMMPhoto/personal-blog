@@ -17,10 +17,13 @@ router.route("/")
   .post(createNewAdmin)
   .put(authMiddleware, savePost);
 
-router.route("/login").post(login);
+router.route("/login")
+  .post(login);
 
-router.route("/me").get(authMiddleware, getCurrentAdmin);
+router.route("/me")
+  .get(authMiddleware, getCurrentAdmin);
 
-router.route("/:id").get(getAdminById).put(updateAdmin);
+router.route("/:id")
+  .get(getAdminById).put(updateAdmin);
 
 module.exports = router;

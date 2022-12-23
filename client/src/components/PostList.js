@@ -12,7 +12,6 @@ export default function PostList() {
         const fetchAllPosts = async () => {
             try {
                 const token = auth.getToken();
-                console.log(token);
                 const response = await getAllPosts(token);
                 const jsonData = await response.json();
                 console.log(jsonData);

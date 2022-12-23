@@ -11,10 +11,16 @@ const {
 
 const { authMiddleware } = require("../../utils/auth.js");
 
-router.route("/").get(authMiddleware, getAllPosts).post(authMiddleware, createNewPost);
+router.route("/")
+  .get(authMiddleware, getAllPosts)
+  .post(authMiddleware, createNewPost);
 
-router.route("/public").get(getPublicPosts);
+router.route("/public")
+  .get(getPublicPosts);
 
-router.route("/:id").get(getPostById).put(authMiddleware, updatePost).delete(authMiddleware, deletePost);
+router.route("/:id")
+  .get(getPostById)
+  .put(authMiddleware, updatePost)
+  .delete(authMiddleware, deletePost);
 
 module.exports = router;
