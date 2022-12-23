@@ -6,6 +6,7 @@ import auth from "../utils/auth";
 export default function PostList() {
 
     const [allPosts, setAllPosts] = useState([{}]);
+    const adminPage = true;
 
     //  Fetch all posts
     useEffect(() => {
@@ -26,7 +27,7 @@ export default function PostList() {
     return (
         <div>
             { allPosts && allPosts.map((post, index) => (
-                <Post key={index} postData={post} />
+                <Post key={index} postData={post} adminPage={adminPage} />
             ))}
         </div>
     );
