@@ -12,8 +12,7 @@ const {
 
 const { authMiddleware } = require("../../utils/auth.js");
 
-router
-  .route("/")
+router.route("/")
   .get(getAllAdmins)
   .post(createNewAdmin)
   .put(authMiddleware, savePost);

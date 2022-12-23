@@ -1,9 +1,10 @@
 // Get All Posts
-export const getAllPosts = () => {
+export const getAllPosts = (token) => {
     return fetch('/api/posts/', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "authorization": token,
       },
     });
   };

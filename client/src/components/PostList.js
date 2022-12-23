@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Post from '../components/Post';
 import { getAllPosts } from "../utils/api";
+import auth from "../utils/auth";
 
 export default function PostList() {
 
@@ -10,7 +11,9 @@ export default function PostList() {
     useEffect(() => {
         const fetchAllPosts = async () => {
             try {
-                const response = await getAllPosts();
+                const token = auth.getToken();
+                console.log(token);
+                const response = await getAllPosts(token);
                 const jsonData = await response.json();
                 console.log(jsonData);
                 setPublicPosts(jsonData);
