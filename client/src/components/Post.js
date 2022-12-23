@@ -1,17 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import prettyDateTime from "../utils/dateFormat";
 import './Post.css';
 
 export default function Post({postData, adminPage}) {
 
-    let createdDate = new Date(postData.createdAt);
-    let createdTime = createdDate.toLocaleTimeString('en-US');
-    createdDate = createdDate.toLocaleDateString();
-
-    let updatedDate = new Date(postData.updatedAt);
-    let updatedTime = updatedDate.toLocaleTimeString('en-US');
-    updatedDate = updatedDate.toLocaleDateString();
-
+    // Make dateTimes pretty
+    const createdAt = prettyDateTime(postData.createdAt);
+    const updatedAt = prettyDateTime(postData.updatedAt);
 
     return (
         <div className="m-4">
@@ -23,8 +19,8 @@ export default function Post({postData, adminPage}) {
                         {(postData.published === true) ? <p>Published</p> : <p>Draft</p>}
                         {(postData.public === true) ? <p>Public</p> : <p>Private</p>}
                     </div>
-                    <p>Created: {createdDate} at {createdTime}</p>
-                    <p>Updated: {updatedDate} at {updatedTime}</p>
+                    <p>Created {createdAt}</p>
+                    <p>Updated {updatedAt}</p>
 
                     </div>
                 }
